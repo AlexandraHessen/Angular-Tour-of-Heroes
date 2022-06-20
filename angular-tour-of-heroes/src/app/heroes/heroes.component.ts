@@ -9,47 +9,24 @@ import { MessageService } from '../message.service';
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css']
 })
+
 export class HeroesComponent implements OnInit {
   //переменные в самом начале, раньше конструктора
-  // hero:Hero = {
-  //   id: 1,
-  //   name: 'Windstorm'
-  // };
+  heroes: Hero[] = [];
 
-  // heroes = HEROES;
-  heroes: Hero[] = []
+  constructor(private heroService: HeroService) { }
 
-  selectedHero?: Hero;
-
-  constructor(private heroService: HeroService, private messageService: MessageService) { }
-
-  // getHeroes(): void{
-  //   this.heroes = this.heroService.getHeroes();
-  // }
+  ngOnInit(): void {
+    this.getHeroes();
+  }
 
   //пока Observableне выпустит массив героев,
   //что может произойти сейчас или через несколько минут.
   //Метод subscribe()передает испускаемый массив обратному вызову,
   //который устанавливает heroesсвойство компонента.
 
-  ngOnInit(): void {
-    this.getHeroes()
-  }
-
-  getHeroes(): void{
+  getHeroes(): void {
     this.heroService.getHeroes()
-      .subscribe(heroes => this.heroes = heroes)
+    .subscribe(heroes => this.heroes = heroes);
   }
-
-
-  // onSelect(hero: Hero): void{
-  //   this.selectedHero = hero;
-  // }
-
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
-    this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-  }
-
-
 }

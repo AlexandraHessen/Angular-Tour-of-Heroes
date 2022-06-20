@@ -20,5 +20,13 @@ export class HeroService {
     return heroes;
   }
 
+  getHero(id: number): Observable<Hero> {
+    //А пока предположим, что герой с указанным `id` всегда существует.
+    //Обработка ошибок будет добавлена ​​на следующем этапе руководства.
+    const hero = HEROES.find(h => h.id === id)!;
+    this.messageService.add(`HeroService: fetched hero id=${id}`);
+    return of(hero);
+  }
+
   constructor(private messageService:MessageService) { }
 }
