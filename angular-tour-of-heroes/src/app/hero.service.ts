@@ -3,21 +3,32 @@ import { Hero } from './hero' // импортируем наш созданны�
 import { HEROES } from './mock-heroes' // импортируем наш массив объектов
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
+  private heroesUrl = 'api/heroes';  // URL to web api
   // getHeroes(): Hero[]{
   //   return HEROES;
   // }
 
-  getHeroes(): Observable<Hero[]>{
-    const heroes = of (HEROES);
-    //of(HEROES)возвращает объект Observable<Hero[]>,
-    //который выдает единственное значение — массив фиктивных героев.
-    this.messageService.add('HeroService: fetched heroes');
-    return heroes;
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService) { }
+
+  // getHeroes(): Observable<Hero[]>{
+  //   const heroes = of (HEROES);
+  //   //of(HEROES)возвращает объект Observable<Hero[]>,
+  //   //который выдает единственное значение — массив фиктивных героев.
+  //   this.messageService.add('HeroService: fetched heroes');
+  //   return heroes;
+  // }
+
+  /** GET heroes from the server */
+  getHeroes(): Observable<Hero[]> {
+    return this.http.get<Hero[]>(this.heroesUrl)
   }
 
   getHero(id: number): Observable<Hero> {
@@ -28,5 +39,10 @@ export class HeroService {
     return of(hero);
   }
 
-  constructor(private messageService:MessageService) { }
+  /** Log a HeroService message with the MessageService */
+private log(message: string) {
+  this.messageService.add(`HeroService: ${message}`);
+}
+
+
 }
