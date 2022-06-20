@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero' // импортируем наш созданный интерфейс
+import { HEROES } from '../mock-heroes' // импортируем наш массив объектов
 
 @Component({
   selector: 'app-heroes',
@@ -11,6 +12,14 @@ export class HeroesComponent implements OnInit {
   hero:Hero = {
     id: 1,
     name: 'Windstorm'
+  };
+
+  heroes = HEROES;
+
+  selectHero?: Hero;
+  onSelect(hero: Hero): void{
+    this.selectHero = hero;
+    console.log(hero);
   }
 
   constructor() { }
