@@ -16,9 +16,6 @@ export class DashboardComponent implements OnInit {
     this.getHeroes();
   }
 
-  //getHeroes()возвращает нарезанный список героев на позициях 1 и 5,
-  //возвращая только четырех главных героев (2-й, 3-й, 4-й и 5-й).
-
   getHeroes(): void {
     this.heroService.getHeroes()
       .subscribe(heroes => this.heroes = heroes.slice(1, 5));
